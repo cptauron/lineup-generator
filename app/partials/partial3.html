@@ -1,0 +1,143 @@
+<section class="styleguide__table">
+    <h2 class="subsection-title">Enter Quarterbacks</h2>
+    <table id="qb" class="table-4">
+        <colgroup>
+            <col span="1">
+            <col span="1">
+            <col span="1">
+            <col span="1">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Salary</th>
+                <th>Projection</th>
+                <th>Game</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="qb in qbs">
+                <td><input ng-model="qb.name" placeholder="Player name" required autocomplete="playerName"> </td>
+                <td><input ng-model="qb.salary" placeholder="Salary" required autocomplete="salary"> </td>
+                <td><input ng-model="qb.projection" placeholder="Projection" required autocomplete="projection"> </td>
+                <td><input ng-model="qb.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="styleguide__inverted-block text-right"><a ng-click="removeQB()" class="button--secondary-variation remove">Remove Last Row</a><a ng-click="addQB()" class="button--primary add">Add Row</a></div>
+</section>
+<section class="styleguide__table">
+    <h2 class="subsection-title">Enter Receivers</h2>
+    <table id="wr" class="table-4">
+        <colgroup>
+            <col span="1">
+            <col span="1">
+            <col span="1">
+            <col span="1">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Player</th>
+            <th>Salary</th>
+            <th>Projection</th>
+            <th>Game</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="wr in wrs">
+            <td><input ng-model="wr.name" placeholder="Player name" required autocomplete="playerName"> </td>
+            <td><input ng-model="wr.salary" placeholder="Salary" required autocomplete="salary"> </td>
+            <td><input ng-model="wr.projection" placeholder="Projection" required autocomplete="projection"> </td>
+            <td><input ng-model="wr.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="styleguide__inverted-block text-right"><a ng-click="removeWR()" class="button--secondary-variation remove">Remove Last Row</a><a ng-click="addWR()" class="button--primary add">Add Row</a></div>
+</section>
+<section class="styleguide__table">
+    <h2 class="subsection-title">Enter Running Backs</h2>
+    <table id="rb" class="table-4">
+        <colgroup>
+            <col span="1">
+            <col span="1">
+            <col span="1">
+            <col span="1">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Player</th>
+            <th>Salary</th>
+            <th>Projection</th>
+            <th>Game</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="rb in rbs">
+            <td><input ng-model="rb.name" placeholder="Player name" required autocomplete="playerName"> </td>
+            <td><input ng-model="rb.salary" placeholder="Salary" required autocomplete="salary"> </td>
+            <td><input ng-model="rb.projection" placeholder="Projection" required autocomplete="projection"> </td>
+            <td><input ng-model="rb.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="styleguide__inverted-block text-right"><a ng-click="removeRB()" class="button--secondary-variation remove">Remove Last Row</a><a ng-click="addRB()" class="button--primary add">Add Row</a></div>
+</section>
+<section class="styleguide__table">
+    <h2 class="subsection-title">Enter Tight Ends</h2>
+    <table id="te" class="table-4">
+        <colgroup>
+            <col span="1">
+            <col span="1">
+            <col span="1">
+            <col span="1">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Player</th>
+            <th>Salary</th>
+            <th>Projection</th>
+            <th>Game</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="te in tes">
+                <td><input ng-model="te.name" placeholder="Player name" required autocomplete="playerName"> </td>
+                <td><input ng-model="te.salary" placeholder="Salary" required autocomplete="salary"> </td>
+                <td><input ng-model="te.projection" placeholder="Projection" required autocomplete="projection"> </td>
+                <td><input ng-model="te.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="styleguide__inverted-block text-right"><a ng-click="removeTE()" class="button--secondary-variation remove">Remove Last Row</a><a ng-click="addTE()" class="button--primary add">Add Row</a></div>
+</section>
+<section class="styleguide__table">
+    <h2 class="subsection-title">Enter Defense</h2>
+    <table id="d" class="table-4">
+        <colgroup>
+            <col span="1">
+            <col span="1">
+            <col span="1">
+            <col span="1">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Player</th>
+            <th>Salary</th>
+            <th>Projection</th>
+            <th>Game</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="d in defense">
+            <td><input ng-model="d.name" placeholder="Player name" required autocomplete="playerName"> </td>
+            <td><input ng-model="d.salary" placeholder="Salary" required autocomplete="salary"> </td>
+            <td><input ng-model="d.projection" placeholder="Projection" required autocomplete="projection"> </td>
+            <td><input ng-model="d.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="styleguide__inverted-block text-right"><a class="button--secondary-variation remove">Remove Last Row</a><a class="button--primary add">Add Row</a></div>
+</section>
+<datalist id="games">
+    <option  data-ng-repeat="game in games track by $index" value="{{game}}">
+</datalist>

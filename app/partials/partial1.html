@@ -1,1 +1,39 @@
-<p>This is the partial for view 1.</p>
+<section>
+    <div class="clear rotation qb">
+        <div class="stack">
+            <div class="g-wide--1 g-medium--half">
+                <p>QB Stacks</p>
+                <div>
+                    <a ng-click="addStack()" id="addQb" class="button--secondary">Add QB Stack</a>
+                </div>
+            </div>
+            <div class="g-wide--3 g-wide--last g-medium--half g--last">
+                <form>
+                    <fieldset>
+                        <div ng-repeat="stack in stacks">
+                            <p>Create Stack</p>
+                            <ui-select ng-model="qb.selected" theme="select2" ng-disabled="disabled" style="min-width: 100%;">
+                                <ui-select-match placeholder="Select QB">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="qb in qbs">
+                                    <div ng-bind-html="trustAsHtml(qb.name) | highlight: $select.search"></div>
+                                    <small>
+                                        salary: {{qb.salary}}, projection: {{qb.projection}}, game: {{qb.game}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                            <ui-select ng-model="o.selected" theme="select2" ng-disabled="disabled" style="min-width: 100%;">
+                                <ui-select-match placeholder="Select WR/RB/TE">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="o in offense">
+                                    <div ng-bind-html="trustAsHtml(o.name) | highlight: $select.search"></div>
+                                    <small>
+                                        salary: {{o.salary}}, projection: {{o.projection}}, game: {{o.game}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

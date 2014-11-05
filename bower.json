@@ -12,6 +12,7 @@
     "angular-mocks": "latest",
     "angular-cookies": "latest",
     "angular-touch": "latest",
-    "angular-ui-utils": "latest"
+    "angular-ui-utils": "latest",
+	"angular-ui-select": "latest"
   }
 }
