@@ -9,18 +9,18 @@
         </colgroup>
         <thead>
             <tr>
-                <th>Player</th>
-                <th>Salary</th>
-                <th>Projection</th>
-                <th>Game</th>
+                <th data-th="Player">Player</th>
+                <th data-th="Salary">Salary</th>
+                <th data-th="Projection">Projection</th>
+                <th data-th="Game">Game</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="qb in qbs">
-                <td><input ng-model="qb.name" placeholder="Player name" required autocomplete="playerName"> </td>
-                <td><input ng-model="qb.salary" placeholder="Salary" required autocomplete="salary"> </td>
-                <td><input ng-model="qb.projection" placeholder="Projection" required autocomplete="projection"> </td>
-                <td><input ng-model="qb.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+                <td data-th="Player"><input ng-model="qb.name" placeholder="Player name" required autocomplete="playerName"> </td>
+                <td data-th="Salary"><input ng-model="qb.salary" placeholder="Salary" required autocomplete="salary"> </td>
+                <td data-th="Projection"><input ng-model="qb.projection" placeholder="Projection" required autocomplete="projection"> </td>
+                <td data-th="Game"><input ng-model="qb.game" placeholder="Game" required list="games" autocomplete="game"> </td>
             </tr>
         </tbody>
     </table>
@@ -37,18 +37,18 @@
         </colgroup>
         <thead>
         <tr>
-            <th>Player</th>
-            <th>Salary</th>
-            <th>Projection</th>
-            <th>Game</th>
+            <th data-th="Player">Player</th>
+            <th data-th="Salary">Salary</th>
+            <th data-th="Projection">Projection</th>
+            <th data-th="Game">Game</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="wr in wrs">
-            <td><input ng-model="wr.name" placeholder="Player name" required autocomplete="playerName"> </td>
-            <td><input ng-model="wr.salary" placeholder="Salary" required autocomplete="salary"> </td>
-            <td><input ng-model="wr.projection" placeholder="Projection" required autocomplete="projection"> </td>
-            <td><input ng-model="wr.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+            <td data-th="Player"><input ng-model="wr.name" placeholder="Player name" required autocomplete="playerName"> </td>
+            <td data-th="Salary"><input ng-model="wr.salary" placeholder="Salary" required autocomplete="salary"> </td>
+            <td data-th="Projection"><input ng-model="wr.projection" placeholder="Projection" required autocomplete="projection"> </td>
+            <td data-th="Game"><input ng-model="wr.game" placeholder="Game" required list="games" autocomplete="game"> </td>
         </tr>
         </tbody>
     </table>
@@ -65,18 +65,18 @@
         </colgroup>
         <thead>
         <tr>
-            <th>Player</th>
-            <th>Salary</th>
-            <th>Projection</th>
-            <th>Game</th>
+            <th data-th="Player">Player</th>
+            <th data-th="Salary">Salary</th>
+            <th data-th="Projection">Projection</th>
+            <th data-th="Game">Game</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="rb in rbs">
-            <td><input ng-model="rb.name" placeholder="Player name" required autocomplete="playerName"> </td>
-            <td><input ng-model="rb.salary" placeholder="Salary" required autocomplete="salary"> </td>
-            <td><input ng-model="rb.projection" placeholder="Projection" required autocomplete="projection"> </td>
-            <td><input ng-model="rb.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+            <td data-th="Player"><input ng-model="rb.name" placeholder="Player name" required autocomplete="playerName"> </td>
+            <td data-th="Salary"><input ng-model="rb.salary" placeholder="Salary" required autocomplete="salary"> </td>
+            <td data-th="Projection"><input ng-model="rb.projection" placeholder="Projection" required autocomplete="projection"> </td>
+            <td data-th="Game"><input ng-model="rb.game" placeholder="Game" required list="games" autocomplete="game"> </td>
         </tr>
         </tbody>
     </table>
@@ -93,18 +93,18 @@
         </colgroup>
         <thead>
         <tr>
-            <th>Player</th>
-            <th>Salary</th>
-            <th>Projection</th>
-            <th>Game</th>
+            <th data-th="Player">Player</th>
+            <th data-th="Salary">Salary</th>
+            <th data-th="Projection">Projection</th>
+            <th data-th="Game">Game</th>
         </tr>
         </thead>
         <tbody>
             <tr ng-repeat="te in tes">
-                <td><input ng-model="te.name" placeholder="Player name" required autocomplete="playerName"> </td>
-                <td><input ng-model="te.salary" placeholder="Salary" required autocomplete="salary"> </td>
-                <td><input ng-model="te.projection" placeholder="Projection" required autocomplete="projection"> </td>
-                <td><input ng-model="te.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+                <td data-th="Player"><input ng-model="te.name" placeholder="Player name" required autocomplete="playerName"> </td>
+                <td data-th="Salary"><input ng-model="te.salary" placeholder="Salary" required autocomplete="salary"> </td>
+                <td data-th="Projection"><input ng-model="te.projection" placeholder="Projection" required autocomplete="projection"> </td>
+                <td data-th="Game"><input ng-model="te.game" placeholder="Game" required list="games" autocomplete="game"> </td>
             </tr>
         </tbody>
     </table>
@@ -121,18 +121,18 @@
         </colgroup>
         <thead>
         <tr>
-            <th>Player</th>
-            <th>Salary</th>
-            <th>Projection</th>
-            <th>Game</th>
+            <th data-th="Player">Player</th>
+            <th data-th="Salary">Salary</th>
+            <th data-th="Projection">Projection</th>
+            <th data-th="Game">Game</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="d in defense">
-            <td><input ng-model="d.name" placeholder="Player name" required autocomplete="playerName"> </td>
-            <td><input ng-model="d.salary" placeholder="Salary" required autocomplete="salary"> </td>
-            <td><input ng-model="d.projection" placeholder="Projection" required autocomplete="projection"> </td>
-            <td><input ng-model="d.game" placeholder="Game" required list="games" autocomplete="game"> </td>
+            <td data-th="Player"><input ng-model="d.name" placeholder="Player name" required autocomplete="playerName"> </td>
+            <td data-th="Salary"><input ng-model="d.salary" placeholder="Salary" required autocomplete="salary"> </td>
+            <td data-th="Projection"><input ng-model="d.projection" placeholder="Projection" required autocomplete="projection"> </td>
+            <td data-th="Game"><input ng-model="d.game" placeholder="Game" required list="games" autocomplete="game"> </td>
         </tr>
         </tbody>
     </table>
