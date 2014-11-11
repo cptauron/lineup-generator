@@ -1,4 +1,4 @@
-# angular-seed-web-starter-kit
+# Lineup Generator
 
 A child of:
 [Web Starter Kit](http://developers.google.com/web/starter-kit) & [Angular Seed](https://github.com/angular/angular-seed)
@@ -10,9 +10,9 @@ A rudimentary deployment system for Heroku is included.  At the moment, these de
 
 ### To use:
 
-	git clone https://github.com/rafriki/angular-seed-web-starter-kit.git
+	git clone https://github.com/phillipsio/lineup-generator.git
 
-	cd angular-seed-web-starter-kit
+	cd lineup-generator
 
 	# Install dependencies
 	npm install
