@@ -10,7 +10,7 @@ A rudimentary deployment system for Heroku is included.  At the moment, these de
 
 ### To use:
 
-	git clone https://github.com/phillipsio/lineup-generator.git
+	git clone https://github.com/cptauron/lineup-generator.git
 
 	cd lineup-generator
 
