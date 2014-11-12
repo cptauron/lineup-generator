@@ -10,7 +10,7 @@ angular.module('myApp.services', [])
 	.value('version', '0.1')
 	.factory('myService', function(){
 
-		var stacks = [{qb:"", o:""}];
+		var stacks = [];
 
 		var property = {
 			"qbs":[{position: "QB", name: "", salary: "", game: "", projection: ""}],
@@ -20,7 +20,16 @@ angular.module('myApp.services', [])
 			"defense":[{position: "D", name: "", salary: "", game: "", projection: ""}]
 		};
 
+		//lineup format: { qb: {qb obj}, flex: {flex obj}, rb1: {rb obj}. rb2: {rb obj}, wr1: {wr obj}, wr2: {wr obj}, wr3: {wr obj}, te: {te obj}, def: {def obj}, rbPool: {eligible rbs}, wrPool: {eligible wrs}, tePool: {eligible tes}, defPool: {eligible defense} }
+		var lineups = [];
+
 		return {
+			getLineups: function() {
+				return lineups;
+			},
+			getRBPool: function(index) {
+				return lineup[index].rbPool;
+			},
 			getPlayers: function() {
 				return property;
 			},
@@ -54,6 +63,9 @@ angular.module('myApp.services', [])
 			},
 			getOffense: function() {
 				return property.wrs.concat(property.rbs.concat(property.tes));
+			},
+			getPlayerSlot: function(slot) {
+				return property[slot];
 			},
 			setStacks: function(stack) {
 				stack.push(stack);

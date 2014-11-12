@@ -1,4 +1,5 @@
 <section class="styleguide__table">
+    <button ng-show="!populated" ng-click="populateData()" class="button--primary">Populate Test Data</button>
     <h2 class="subsection-title">Enter Quarterbacks</h2>
     <table id="qb" class="table-4">
         <colgroup>
@@ -136,7 +137,7 @@
         </tr>
         </tbody>
     </table>
-    <div class="styleguide__inverted-block text-right"><a class="button--secondary-variation remove">Remove Last Row</a><a class="button--primary add">Add Row</a></div>
+    <div class="styleguide__inverted-block text-right"><a ng-click="removeDEF()" class="button--secondary-variation remove">Remove Last Row</a><a ng-click="addDEF()" class="button--primary add">Add Row</a></div>
 </section>
 <datalist id="games">
     <option  data-ng-repeat="game in games track by $index" value="{{game}}">

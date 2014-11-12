@@ -1,5 +1,77 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<section>
+    <div class="pick-generator">
+        <div ng-repeat="(key, stack) in stacks">
+            <div>
+                {{stack.qb.name}} - {{stack.o.name}}
+
+                <div class="generator-button">
+                    <button class="button--primary" ng-hide="stack.generatedPicks" ng-click="generatePicks(key);">Generate Picks</button>
+                </div>
+                <div class="g-wide--3 g-wide--last g-medium--half g--last" ng-show="stack.generatedPicks">
+                    <form>
+                        <fieldset>
+                            <ui-select ng-model="rb1.selected" ng-change="updateSelected(key, 'rb1', rb1.selected)" theme="select2"
+                                       ng-disabled="disabled" style="min-width: 100%;">
+                                <ui-select-match placeholder="Select RB1">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="rb1 in lineups[key].pools.rbPool">
+                                    <div ng-bind-html="trustAsHtml(rb1.name) | highlight: $select.search"></div>
+                                    <small>
+                                        salary: {{rb1.salary}}, projection: {{rb1.projection}}, game: {{rb1.game}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <ui-select ng-model="rb2.selected" ng-change="" theme="select2"
+                                       ng-disabled="disabled" style="min-width: 100%;">
+                                <ui-select-match placeholder="Select RB2">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="rb2 in lineups[key].pools.rbPool">
+                                    <div ng-bind-html="trustAsHtml(rb2.name) | highlight: $select.search"></div>
+                                    <small>
+                                        salary: {{rb1.salary}}, projection: {{rb1.projection}}, game: {{rb1.game}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <ui-select ng-model="wr1.selected" ng-change="" theme="select2"
+                                       ng-disabled="disabled" style="min-width: 100%;">
+                                <ui-select-match placeholder="Select WR1">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="wr1 in lineups[key].pools.rbPool">
+                                    <div ng-bind-html="trustAsHtml(wr1.name) | highlight: $select.search"></div>
+                                    <small>
+                                        salary: {{wr1.salary}}, projection: {{wr1.projection}}, game: {{wr1.game}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <ui-select ng-model="wr2.selected" ng-change="" theme="select2"
+                                       ng-disabled="disabled" style="min-width: 100%;">
+                                <ui-select-match placeholder="Select WR2">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="wr2 in lineups[key].pools.rbPool">
+                                    <div ng-bind-html="trustAsHtml(wr2.name) | highlight: $select.search"></div>
+                                    <small>
+                                        salary: {{wr2.salary}}, projection: {{wr2.projection}}, game: {{wr2.game}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <ui-select ng-model="wr3.selected" ng-change="" theme="select2"
+                                       ng-disabled="disabled" style="min-width: 100%;">
+                                <ui-select-match placeholder="Select WR3">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="wr3 in lineups[key].pools.rbPool">
+                                    <div ng-bind-html="trustAsHtml(wr3.name) | highlight: $select.search"></div>
+                                    <small>
+                                        salary: {{wr3.salary}}, projection: {{wr3.projection}}, game: {{wr3.game}}
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            
+                            
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</section>
