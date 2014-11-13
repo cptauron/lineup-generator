@@ -88,6 +88,8 @@
                                             lineupHolder.push(
                                                 {
                                                     criteraMet: true,
+                                                    totalSalary: 0,
+                                                    salaries: [],
                                                     rb1: newPools.rbs[a],
                                                     rb2: newPools.rbs[b],
                                                     wr1: newPools.wrs[c],
@@ -113,16 +115,17 @@
                 for (var i = 0; i < lineupHolder.length; i++) {
 
                     var salaries = [
-                        $scope.stacks[index].qb.salary,
-                        $scope.stacks[index].flex.salary,
-                        lineupHolder[i].rb1.salary,
-                        lineupHolder[i].rb2.salary,
-                        lineupHolder[i].wr1.salary,
-                        lineupHolder[i].wr2.salary,
-                        lineupHolder[i].wr3.salary,
-                        lineupHolder[i].te.salary,
-                        lineupHolder[i].def.salary
+                        Number($scope.stacks[index].qb.salary),
+                        Number($scope.stacks[index].flex.salary),
+                        Number(lineupHolder[i].rb1.salary),
+                        Number(lineupHolder[i].rb2.salary),
+                        Number(lineupHolder[i].wr1.salary),
+                        Number(lineupHolder[i].wr2.salary),
+                        Number(lineupHolder[i].wr3.salary),
+                        Number(lineupHolder[i].te.salary),
+                        Number(lineupHolder[i].def.salary)
                     ];
+
 
 
                     //QB = QB stack in this check, assuming flex and qb share games
@@ -153,11 +156,13 @@
                     //Check each critera only if previous still met (true) to save performance time
                     //Salary
                     var lineupSalary = 0;
-
+                    var invalidNumbers = 0;
                     if(lineupHolder[i].criteraMet == true) {
                         for (var k = 0; k < salaries.length; k++) {
-                            lineupSalary += Number(salaries[i]);
+                            lineupSalary += salaries[k];
                         }
+                        lineupHolder[i].salaries = salaries;
+                        lineupHolder[i].totalSalary = lineupSalary;
 
                         if (lineupSalary > salaryCap) {
                             lineupHolder[i].criteraMet = false;
@@ -184,8 +189,8 @@
                     }
 
                 }
-                console.log(falsecount + " - " + dupePlayers + " - " + dupeGames + " - " + overSalary);
-                console.log(lineupHolder[0]);
+                console.log(falsecount + " - " + dupePlayers + " - " + dupeGames + " - " + overSalary + " - " + invalidNumbers);
+
                 var splicecount = 0;
                 for(var j = lineupHolder.length-1; j >= 0; j--){
                     if (lineupHolder[j].criteraMet == false) {
@@ -193,11 +198,8 @@
                         splicecount++;
                     }
                 }
-                console.log(splicecount);
-                console.log(lineupHolder[0]);
+                console.log(lineupHolder);
                 $scope.stacks[index].lineups = lineupHolder;
-
-
             };
         }])
         .controller('MyCtrl3', ['$scope', 'myService', function ($scope, myService) {
