@@ -22,8 +22,18 @@
             $scope.saveStack = function () {
                 $scope.stacks.push({
                     qb: $scope.selectedQB,
-                    o: $scope.selectedO,
-                    generatedPicks: false
+                    flex: $scope.selectedO,
+                    generatedPicks: false,
+                    lineups: [{
+                        criteraMet: true,
+                        rb1: "test",
+                        rb2: "test",
+                        wr1: "test",
+                        wr2: "test",
+                        wr3: "test",
+                        te: "test",
+                        def: "test"
+                    }]
                 });
             };
 
@@ -40,116 +50,154 @@
             console.log($scope.stacks);
 
         }])
-        .controller('MyCtrl2', ['$scope', 'myService', '$sce', function ($scope, myService, $sce) {
+        .controller('MyCtrl2', ['$scope', 'myService', function ($scope, myService) {
 
             var salaryCap = 50000;
 
-            $scope.trustAsHtml = function (value) {
-                return $sce.trustAsHtml(value);
-            };
-
             $scope.stacks = myService.getStacks();
-            $scope.pickPool = myService.getPlayers();
-            $scope.lineups = myService.getLineups();
-
-            var lineupSchema = {
-                chosenPlayers: {
-                    qb: null,
-                    flex: null,
-                    rb1: null,
-                    rb2: null,
-                    wr1: null,
-                    wr2: null,
-                    wr3: null,
-                    te: null,
-                    def: null
-                },
-                pools: {
-                    rbPool: myService.getPlayerSlot('rbs'),
-                    wrPool: myService.getPlayerSlot('wrs'),
-                    tePool: myService.getPlayerSlot('tes'),
-                    defPool: myService.getPlayerSlot('defense')
-                }
+            $scope.lineupCount = 0;
+            var newPools = {
+                rbs: myService.getPlayerSlot('rbs'),
+                wrs: myService.getPlayerSlot('wrs'),
+                tes: myService.getPlayerSlot('tes'),
+                defense: myService.getPlayerSlot('defense')
             };
 
-            $scope.calculateEligibility = function (salaryCap, playerPools, chosenPlayers, index) {
-                var salaries = {
-                    qb: 0,
-                    flex: 0,
-                    rb1: 0,
-                    rb2: 0,
-                    wr1: 0,
-                    wr2: 0,
-                    wr3: 0,
-                    te: 0,
-                    def: 0
-                };
-
-                var currentSalary = 0;
-
-                for (var key in chosenPlayers) {
-                    if (chosenPlayers.hasOwnProperty(key)) {
-                        var value = chosenPlayers[key];
-                        if (value != null) {
-                            if (isNaN(value.salary)) {
-                                alert("Salary for " + value.position + " is not valid");
-                            }
-                            else {
-                                salaries[key] = value.salary;
-                                currentSalary = currentSalary + Number(value.salary);
-                            }
-                        }
+            $scope.checkDuplicate = function(array) {
+                //returns True if the array has a duplicate
+                var sorted_array = array.sort();
+                for (var i = 0; i < array.length - 1; i++) {
+                    if (sorted_array[i + 1] == sorted_array[i]) {
+                        return true;
                     }
                 }
-                console.log(salaries);
-                console.log(currentSalary);
-                $scope.updatePools(salaryCap, currentSalary, index);
-            };
-
-            $scope.updatePools = function(salaryCap, currentSalary, index) {
-                //potential is $scope.pickPool
-                var newPools = {
-                    rbs: [],
-                    wrs: [],
-                    tes: [],
-                    defense: []
-                };
-
-                var remainingSalary = salaryCap - currentSalary;
-                console.log(remainingSalary);
-
-                //reduce RB pool
-                for (var i = 0, length = $scope.pickPool.rbs.length; i < length; i++) {
-                    if($scope.pickPool.rbs[i].salary < remainingSalary) {
-                        newPools.rbs.push($scope.pickPool.rbs[i]);
-                    }
-                }
-
-                $scope.lineups[index].pools.rbPool = newPools.rbs;
-                //reduce WR pool
-
-                //reduce TE pool
-
-                //reduce DEF pool
-
-            };
-
-            $scope.updateSelected = function(index, slot, data) {
-                $scope.lineups[index].chosenPlayers[slot] = data;
-                console.log($scope.lineups[index].chosenPlayers[slot]);
-                $scope.calculateEligibility(salaryCap, null, $scope.lineups[index].chosenPlayers, index);
+                return false;
             };
 
             $scope.generatePicks = function (index) {
                 $scope.stacks[index].generatedPicks = true;
-                $scope.lineups[index] = lineupSchema;
-                $scope.lineups[index].chosenPlayers.qb = $scope.stacks[index].qb;
-                $scope.lineups[index].chosenPlayers.flex = $scope.stacks[index].o;
+                var lineupHolder = [];
+                //loop through players
+                for (var a = 0, alength = newPools.rbs.length; a < alength; a++) {
+                    for (var b = 0, blength = newPools.rbs.length; b < blength; b++) {
+                        for (var c = 0, clength = newPools.wrs.length; c < clength; c++) {
+                            for (var d = 0, dlength = newPools.wrs.length; d < dlength; d++) {
+                                for (var e = 0, elength = newPools.wrs.length; e < elength; e++) {
+                                    for (var f = 0, flength = newPools.tes.length; f < flength; f++) {
+                                        for (var g = 0, glength = newPools.defense.length; g < glength; g++) {
+                                            lineupHolder.push(
+                                                {
+                                                    criteraMet: true,
+                                                    rb1: newPools.rbs[a],
+                                                    rb2: newPools.rbs[b],
+                                                    wr1: newPools.wrs[c],
+                                                    wr2: newPools.wrs[d],
+                                                    wr3: newPools.wrs[e],
+                                                    te: newPools.tes[f],
+                                                    def: newPools.defense[g]
+                                                }
+                                            );
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                console.log(lineupHolder.length);
 
-                $scope.calculateEligibility(salaryCap, null, $scope.lineups[index].chosenPlayers, index);
+                var falsecount = 0;
+                var dupeGames = 0;
+                var dupePlayers = 0;
+                var overSalary = 0;
+                for (var i = 0; i < lineupHolder.length; i++) {
 
-                console.log("Lineups:");
-                console.log($scope.lineups);
+                    var salaries = [
+                        $scope.stacks[index].qb.salary,
+                        $scope.stacks[index].flex.salary,
+                        lineupHolder[i].rb1.salary,
+                        lineupHolder[i].rb2.salary,
+                        lineupHolder[i].wr1.salary,
+                        lineupHolder[i].wr2.salary,
+                        lineupHolder[i].wr3.salary,
+                        lineupHolder[i].te.salary,
+                        lineupHolder[i].def.salary
+                    ];
+
+
+                    //QB = QB stack in this check, assuming flex and qb share games
+                    var games = [
+                        $scope.stacks[index].qb.game,
+                        lineupHolder[i].rb1.game,
+                        lineupHolder[i].rb2.game,
+                        lineupHolder[i].wr1.game,
+                        lineupHolder[i].wr2.game,
+                        lineupHolder[i].wr3.game,
+                        lineupHolder[i].te.game,
+                        lineupHolder[i].def.game
+                    ];
+
+                    var names = [
+                        $scope.stacks[index].qb.name,
+                        $scope.stacks[index].flex.name,
+                        lineupHolder[i].rb1.name,
+                        lineupHolder[i].rb2.name,
+                        lineupHolder[i].wr1.name,
+                        lineupHolder[i].wr2.name,
+                        lineupHolder[i].wr3.name,
+                        lineupHolder[i].te.name,
+                        lineupHolder[i].def.name
+                    ];
+
+
+                    //Check each critera only if previous still met (true) to save performance time
+                    //Salary
+                    var lineupSalary = 0;
+
+                    if(lineupHolder[i].criteraMet == true) {
+                        for (var k = 0; k < salaries.length; k++) {
+                            lineupSalary += Number(salaries[i]);
+                        }
+
+                        if (lineupSalary > salaryCap) {
+                            lineupHolder[i].criteraMet = false;
+                            falsecount++;
+                            overSalary++;
+                        }
+                    }
+                    //Duplicate games
+                    if(lineupHolder[i].criteraMet == true) {
+                        if($scope.checkDuplicate(games)) {
+                            lineupHolder[i].criteraMet = false;
+                            falsecount++;
+                            dupeGames++;
+                        }
+                    }
+
+                    //Duplicate Players
+                    if(lineupHolder[i].criteraMet == true) {
+                        if ($scope.checkDuplicate(names)) {
+                            lineupHolder[i].criteraMet = false;
+                            falsecount++;
+                            dupePlayers++;
+                        }
+                    }
+
+                }
+                console.log(falsecount + " - " + dupePlayers + " - " + dupeGames + " - " + overSalary);
+                console.log(lineupHolder[0]);
+                var splicecount = 0;
+                for(var j = lineupHolder.length-1; j >= 0; j--){
+                    if (lineupHolder[j].criteraMet == false) {
+                        lineupHolder.splice(j, 1);
+                        splicecount++;
+                    }
+                }
+                console.log(splicecount);
+                console.log(lineupHolder[0]);
+                $scope.stacks[index].lineups = lineupHolder;
+
+
             };
         }])
         .controller('MyCtrl3', ['$scope', 'myService', function ($scope, myService) {
@@ -167,47 +215,42 @@
             $scope.populated = false;
 
             var testqbs = [
-                {position: "QB", name: "QB1", salary: 5000, game: "Game1", projection: "NA"},
-                {position: "QB", name: "QB2", salary: 5000, game: "Game2", projection: "NA"},
-                {position: "QB", name: "QB3", salary: 5000, game: "Game3", projection: "NA"},
-                {position: "QB", name: "QB4", salary: 5000, game: "Game4", projection: "NA"},
-                {position: "QB", name: "QB5", salary: 5000, game: "Game5", projection: "NA"}
+                {position: "QB", name: "Andrew Luck", salary: 8800, game: "IND@PIT", projection: "22.4"},
+                {position: "QB", name: "Tom Brady", salary: 7200, game: "CHI@NE", projection: "18.8"},
+                {position: "QB", name: "Jay Cutler", salary: 8300, game: "CHI@NE", projection: "18.5"}
             ];
 
             var testrbs = [
-                {position: "RB", name: "RB1", salary: 5000, game: "Game1", projection: "NA"},
-                {position: "RB", name: "RB2", salary: 10000, game: "Game2", projection: "NA"},
-                {position: "RB", name: "RB3", salary: 15000, game: "Game3", projection: "NA"},
-                {position: "RB", name: "RB4", salary: 20000, game: "Game4", projection: "NA"},
-                {position: "RB", name: "RB5", salary: 25000, game: "Game5", projection: "NA"}
+                {position: "RB", name: "Mark Ingram", salary: 4300, game: "GB@NO", projection: "15.6"},
+                {position: "RB", name: "Shane Vereen", salary: 6200, game: "CHI@NE", projection: "17.6"},
+                {position: "RB", name: "Darren McFadden", salary: 4700, game: "OAK@CLE", projection: "14.5"},
+                {position: "RB", name: "Jerick McKinnon", salary: 4900, game: "MIN@TB", projection: "15"}
             ];
 
             var testwrs = [
-                {position: "WR", name: "WR1", salary: 5000, game: "Game1", projection: "NA"},
-                {position: "WR", name: "WR2", salary: 10000, game: "Game2", projection: "NA"},
-                {position: "WR", name: "WR3", salary: 15000, game: "Game3", projection: "NA"},
-                {position: "WR", name: "WR4", salary: 20000, game: "Game4", projection: "NA"},
-                {position: "WR", name: "WR5", salary: 25000, game: "Game5", projection: "NA"}
+                {position: "WR", name: "Julian Edelman", salary: 4600, game: "CHI@NE", projection: "33.7"},
+                {position: "WR", name: "Dwayne Bowe", salary: 3600, game: "STL@KC", projection: "12.1"},
+                {position: "WR", name: "Jarvis Landry", salary: 3500, game: "MIA@JAX", projection: "11.3"},
+                {position: "WR", name: "Doug Baldwin", salary: 4700, game: "SEA@CAR", projection: "14.9"}
             ];
 
             var testtes = [
-                {position: "TE", name: "TE1", salary: 5000, game: "Game1", projection: "NA"},
-                {position: "TE", name: "TE2", salary: 5000, game: "Game2", projection: "NA"},
-                {position: "TE", name: "TE3", salary: 5000, game: "Game3", projection: "NA"},
-                {position: "TE", name: "TE4", salary: 50000, game: "Game4", projection: "NA"},
-                {position: "TE", name: "TE5", salary: 5000, game: "Game5", projection: "NA"}
+                {position: "TE", name: "Jordan Reed", salary: 4000, game: "WAS@DAL", projection: "12.6"},
+                {position: "TE", name: "Jared Cook", salary: 3400, game: "STL@KC", projection: "10.4"},
+                {position: "TE", name: "Travis Kelce", salary: 3800, game: "STL@KC", projection: "11.3"},
+                {position: "TE", name: "Dwayne Allen", salary: 3900, game: "IND@PIT", projection: "11.5"}
             ];
 
             var testdefense = [
-                {position: "D", name: "D1", salary: 5000, game: "Game1", projection: "NA"},
-                {position: "D", name: "D2", salary: 5000, game: "Game2", projection: "NA"},
-                {position: "D", name: "D3", salary: 5000, game: "Game3", projection: "NA"},
-                {position: "D", name: "D4", salary: 5000, game: "Game4", projection: "NA"},
-                {position: "D", name: "D5", salary: 5000, game: "Game5", projection: "NA"}
+                {position: "D", name: "Dolphins", salary: 3300, game: "MIA@JAX", projection: "13"},
+                {position: "D", name: "Chiefs", salary: 2800, game: "STL@KC", projection: "10.9"},
+                {position: "D", name: "Jets", salary: 2800, game: "BUF@NJ", projection: "10.6"},
+                {position: "D", name: "Cowboys", salary: 3000, game: "WAS@DAL", projection: "9"}
             ];
 
             $scope.populateData = function () {
                 $scope.populated = true;
+
                 testqbs.forEach(function (value) {
                     $scope.qbs.push(value);
                 });
