@@ -8,8 +8,10 @@
                     <button class="button--primary" ng-hide="stack.generatedPicks" ng-click="generatePicks(key);">Generate Picks</button>
                 </div>
                 <div ng-show="stack.generatedPicks">
-                    <div ng-repeat="lineup in stack.lineups">
-                        {{$index}} - {{::lineup.totalSalary}} - {{::lineup.rb1.name}} - {{::lineup.rb2.name}} - {{::lineup.wr1.name}} - {{::lineup.wr2.name}} - {{::lineup.wr3.name}} - {{::lineup.te.name}} - {{::lineup.def.name}}
+                    <div ng-repeat="lineup in lineups">
+                        {{$index}} =  {{lineup[0]}} - {{lineup[1]}} - {{lineup[2]}} - {{lineup[3]}} - {{lineup[4]}} - {{lineup[5]}} - {{lineup[6]}} - {{lineup[7]}} - {{lineup[8]}}
+                        <div ng-repeat="stuff in lineup">
+
                     </div>
                 </div>
             </div>

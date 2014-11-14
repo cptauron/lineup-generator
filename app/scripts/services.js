@@ -17,10 +17,10 @@ angular.module('myApp.services', [])
 			"rbs":[{position: "RB", name: "Matt Forte", salary: 8800, game: "CHI@NE", projection: "23.5"}],
 			"wrs":[{position: "WR", name: "Robert Woods", salary: 3000, game: "BUF@NY", projection: "36.7"}],
 			"tes":[{position: "TE", name: "Zach Ertz", salary: 3200, game: "PHI@ARI", projection: "10.2"}],
-			"defense":[{position: "D", name: "Brows", salary: 2700, game: "OAK@CLE", projection: "10.9"}]
+			"defense":[{position: "D", name: "Browns", salary: 2700, game: "OAK@CLE", projection: "10.9"}]
 		};
 
-		//lineup format: { rb1: {rb obj}. rb2: {rb obj}, wr1: {wr obj}, wr2: {wr obj}, wr3: {wr obj}, te: {te obj}, def: {def obj}, rbPool: {eligible rbs}, wrPool: {eligible wrs}, tePool: {eligible tes}, defPool: {eligible defense} }
+
 		var lineups = [];
 
 		return {

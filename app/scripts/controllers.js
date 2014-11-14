@@ -3,6 +3,30 @@
     'use strict';
 
     /* Controllers */
+    Array.prototype.equals = function (array) {
+        // if the other array is a falsy value, return
+        if (!array)
+            return false;
+
+        // compare lengths - can save a lot of time
+        if (this.length != array.length)
+            return false;
+
+        for (var i = 0, l=this.length; i < l; i++) {
+            // Check if we have nested arrays
+            if (this[i] instanceof Array && array[i] instanceof Array) {
+                // recurse into the nested arrays
+                if (!this[i].equals(array[i]))
+                    return false;
+            }
+            else if (this[i] != array[i]) {
+                // Warning - two different object instances will never be equal: {x:20} != {x:20}
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     angular.module('myApp.controllers', ["ui.select"])
         .controller('MyCtrl1', ['$scope', 'myService', '$sce', function ($scope, myService, $sce) {
@@ -45,16 +69,21 @@
                 $scope.selectedO = o;
             };
 
-            $scope.stackCount = $scope.stackslength;
+            //$scope.stackCount = $scope.stackslength;
 
             console.log($scope.stacks);
 
         }])
         .controller('MyCtrl2', ['$scope', 'myService', function ($scope, myService) {
-
+            /* Assumptions:
+                Both players in QB stack share the same game.
+                Player name is "unique".  If players share a name then it will have to be indicated that it is a different player somehow eg: Player Name 1, Player Name - Team, etc
+             */
             var salaryCap = 50000;
+            var salaryLowerLimit = 0; //49700 is desired
 
             $scope.stacks = myService.getStacks();
+            $scope.lineups = myService.getLineups();
             $scope.lineupCount = 0;
             var newPools = {
                 rbs: myService.getPlayerSlot('rbs'),
@@ -88,8 +117,11 @@
                                             lineupHolder.push(
                                                 {
                                                     criteraMet: true,
+                                                    duplicate: false,
                                                     totalSalary: 0,
                                                     salaries: [],
+                                                    qb: $scope.stacks[index].qb,
+                                                    flex: $scope.stacks[index].flex,
                                                     rb1: newPools.rbs[a],
                                                     rb2: newPools.rbs[b],
                                                     wr1: newPools.wrs[c],
@@ -115,8 +147,8 @@
                 for (var i = 0; i < lineupHolder.length; i++) {
 
                     var salaries = [
-                        Number($scope.stacks[index].qb.salary),
-                        Number($scope.stacks[index].flex.salary),
+                        Number(lineupHolder[i].qb.salary),
+                        Number(lineupHolder[i].flex.salary),
                         Number(lineupHolder[i].rb1.salary),
                         Number(lineupHolder[i].rb2.salary),
                         Number(lineupHolder[i].wr1.salary),
@@ -153,7 +185,7 @@
                     ];
 
 
-                    //Check each critera only if previous still met (true) to save performance time
+                    //Check each criteria only if previous still met (true) to save performance time
                     //Salary
                     var lineupSalary = 0;
                     var invalidNumbers = 0;
@@ -164,7 +196,7 @@
                         lineupHolder[i].salaries = salaries;
                         lineupHolder[i].totalSalary = lineupSalary;
 
-                        if (lineupSalary > salaryCap) {
+                        if (lineupSalary > salaryCap || lineupSalary < salaryLowerLimit) {
                             lineupHolder[i].criteraMet = false;
                             falsecount++;
                             overSalary++;
@@ -188,6 +220,7 @@
                         }
                     }
 
+
                 }
                 console.log(falsecount + " - " + dupePlayers + " - " + dupeGames + " - " + overSalary + " - " + invalidNumbers);
 
@@ -198,8 +231,45 @@
                         splicecount++;
                     }
                 }
-                console.log(lineupHolder);
-                $scope.stacks[index].lineups = lineupHolder;
+
+                var dupeHolder = [];
+                var noDupes = [];
+                for (var i = 0; i < lineupHolder.length; i++) {
+                    var potentialDupe = [
+                        lineupHolder[i].qb.name,
+                        lineupHolder[i].flex.name,
+                        lineupHolder[i].rb1.name,
+                        lineupHolder[i].rb2.name,
+                        lineupHolder[i].wr1.name,
+                        lineupHolder[i].wr2.name,
+                        lineupHolder[i].wr3.name,
+                        lineupHolder[i].te.name,
+                        lineupHolder[i].def.name
+                    ];
+
+                    var sortedPotentialDupe = potentialDupe.sort();
+                    dupeHolder.push(sortedPotentialDupe);
+                }
+
+                //Duplicate Unordered picks
+                var sorted_array = dupeHolder.sort();
+                for (var h = 0; h < dupeHolder.length - 1; h++) {
+                    //assume first value is not a dupe
+                    if(h == 0) {
+                        noDupes.push(sorted_array[h]);
+                    }
+                    if (!sorted_array[h + 1].equals(sorted_array[h])) {
+                        //push non dupes to new array
+                        noDupes.push(sorted_array[h+1]);
+
+                    }
+                }
+
+
+                console.log(sorted_array);
+                //console.log(lineupHolder);
+                //$scope.stacks[index].lineups = lineupHolder;
+                $scope.lineups = noDupes;
             };
         }])
         .controller('MyCtrl3', ['$scope', 'myService', function ($scope, myService) {
