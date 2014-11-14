@@ -71,7 +71,7 @@
 
             //$scope.stackCount = $scope.stackslength;
 
-            console.log($scope.stacks);
+            //console.log($scope.stacks);
 
         }])
         .controller('MyCtrl2', ['$scope', 'myService', function ($scope, myService) {
@@ -138,7 +138,7 @@
                         }
                     }
                 }
-                console.log(lineupHolder.length);
+                //console.log(lineupHolder.length);
 
                 var falsecount = 0;
                 var dupeGames = 0;
@@ -266,7 +266,7 @@
                 }
 
 
-                console.log(sorted_array);
+                //console.log(sorted_array);
                 //console.log(lineupHolder);
                 //$scope.stacks[index].lineups = lineupHolder;
                 $scope.lineups = noDupes;
