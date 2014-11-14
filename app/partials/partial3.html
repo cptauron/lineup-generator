@@ -1,5 +1,9 @@
 <section class="styleguide__table">
     <button ng-show="!populated" ng-click="populateData()" class="button--primary">Populate Test Data</button>
+    <form>
+        <input type="file" name="csv_file" id="fileToUpload" />
+        <button ng-show="!populated" ng-click="parseCSV()" class="button--primary">Parse Upload Data</button>
+    </form>
     <h2 class="subsection-title">Enter Quarterbacks</h2>
     <table id="qb" class="table-4">
         <colgroup>

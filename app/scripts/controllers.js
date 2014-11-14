@@ -25,7 +25,7 @@
             }
         }
         return true;
-    }
+    };
 
 
     angular.module('myApp.controllers', ["ui.select"])
@@ -80,7 +80,7 @@
                 Player name is "unique".  If players share a name then it will have to be indicated that it is a different player somehow eg: Player Name 1, Player Name - Team, etc
              */
             var salaryCap = 50000;
-            var salaryLowerLimit = 0; //49700 is desired
+            var salaryLowerLimit = 49700; //49700 is desired
 
             $scope.stacks = myService.getStacks();
             $scope.lineups = myService.getLineups();
@@ -283,8 +283,71 @@
             $scope.wrs = players.wrs;
             $scope.tes = players.tes;
             $scope.defense = players.defense;
-
             $scope.populated = false;
+
+            $scope.parseCSV = function () {
+                var files = document.getElementById('fileToUpload').files;
+                Papa.parse(files[0], {
+                    complete: function (results) {
+                        for (var i = 1; i < results.data.length; i++) {
+                            if(results.data[i].length == 5) {
+                                if(results.data[i][3] == "QB") {
+                                    $scope.qbs.push({
+                                            position: results.data[i][3],
+                                            name: results.data[i][0],
+                                            salary: results.data[i][1],
+                                            game: results.data[i][4],
+                                            projection: results.data[i][2]
+                                        }
+                                    );
+                                }
+                                else if(results.data[i][3] == "WR") {
+                                    $scope.wrs.push({
+                                            position: results.data[i][3],
+                                            name: results.data[i][0],
+                                            salary: results.data[i][1],
+                                            game: results.data[i][4],
+                                            projection: results.data[i][2]
+                                        }
+                                    );
+                                }
+                                else if(results.data[i][3] == "RB") {
+                                    $scope.rbs.push({
+                                            position: results.data[i][3],
+                                            name: results.data[i][0],
+                                            salary: results.data[i][1],
+                                            game: results.data[i][4],
+                                            projection: results.data[i][2]
+                                        }
+                                    );
+                                }
+                                else if(results.data[i][3] == "DEF") {
+                                    $scope.defense.push({
+                                            position: results.data[i][3],
+                                            name: results.data[i][0],
+                                            salary: results.data[i][1],
+                                            game: results.data[i][4],
+                                            projection: results.data[i][2]
+                                        }
+                                    );
+                                }
+                                else if(results.data[i][3] == "TE") {
+                                    $scope.tes.push({
+                                            position: results.data[i][3],
+                                            name: results.data[i][0],
+                                            salary: results.data[i][1],
+                                            game: results.data[i][4],
+                                            projection: results.data[i][2]
+                                        }
+                                    );
+                                }
+                            }
+                        }
+                        $scope.$apply();
+                    }
+                });
+            };
+
 
             var testqbs = [
                 {position: "QB", name: "Andrew Luck", salary: 8800, game: "IND@PIT", projection: "22.4"},
